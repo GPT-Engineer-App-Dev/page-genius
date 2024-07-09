@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle2, Star, Zap, Shield } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CheckCircle2, Star, Zap, Shield, X } from "lucide-react";
 
 const Index = () => {
   return (
@@ -69,8 +70,43 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Pricing Tiers Comparison Section */}
+      <section id="pricing-comparison" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Compare Pricing Tiers</h2>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[200px]">Feature</TableHead>
+                  {pricingPlans.map((plan) => (
+                    <TableHead key={plan.title} className="text-center">{plan.title}</TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {pricingFeatures.map((feature, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">{feature.name}</TableCell>
+                    {pricingPlans.map((plan) => (
+                      <TableCell key={plan.title} className="text-center">
+                        {feature[plan.title.toLowerCase()] ? (
+                          <CheckCircle2 className="h-5 w-5 text-green-500 mx-auto" />
+                        ) : (
+                          <X className="h-5 w-5 text-red-500 mx-auto" />
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </section>
+
       {/* About Us Section */}
-      <section id="about" className="py-20 bg-gray-50">
+      <section id="about" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">About Us</h2>
           <p className="text-center max-w-2xl mx-auto mb-12">
@@ -93,7 +129,7 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
           <form className="max-w-md mx-auto">
@@ -170,6 +206,18 @@ const pricingPlans = [
     description: "Custom solutions for large-scale operations.",
     featured: false
   }
+];
+
+const pricingFeatures = [
+  { name: "Core Features", basic: true, pro: true, enterprise: true },
+  { name: "Team Members", basic: "Up to 5", pro: "Up to 20", enterprise: "Unlimited" },
+  { name: "Storage", basic: "10GB", pro: "100GB", enterprise: "Unlimited" },
+  { name: "API Access", basic: false, pro: true, enterprise: true },
+  { name: "Custom Integrations", basic: false, pro: false, enterprise: true },
+  { name: "24/7 Support", basic: false, pro: true, enterprise: true },
+  { name: "Analytics", basic: "Basic", pro: "Advanced", enterprise: "Enterprise-grade" },
+  { name: "Data Export", basic: false, pro: true, enterprise: true },
+  { name: "White Labeling", basic: false, pro: false, enterprise: true },
 ];
 
 const teamMembers = [
